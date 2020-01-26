@@ -1550,7 +1550,7 @@ void CInfoViewer::getEPG(const t_channel_id for_channel_id, CSectionsdClient::Cu
 		}
 		else
 			msg = NeutrinoMessages::EVT_NOEPG_YET;
-		g_RCInput->postMsg(msg, (const neutrino_msg_data_t)p, false); // data is pointer to allocated memory
+		g_RCInput->postMsg(msg, (neutrino_msg_data_t)p, false); // data is pointer to allocated memory
 		copy_info(&info,&oldinfo);
 	}
 }

@@ -303,7 +303,7 @@ int CRemoteControl::handleMsg(const neutrino_msg_t msg, neutrino_msg_data_t data
 #endif
 			char *p = new char[sizeof(t_channel_id)];
 			memcpy(p, &current_channel_id, sizeof(t_channel_id));
-			g_RCInput->postMsg(NeutrinoMessages::EVT_ZAP_GOTPIDS, neutrino_msg_data_t)p, false);
+			g_RCInput->postMsg(NeutrinoMessages::EVT_ZAP_GOTPIDS, (neutrino_msg_data_t)p, false);
 
 			processAPIDnames();
 		}

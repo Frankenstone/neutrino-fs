@@ -343,6 +343,8 @@ AC_OUTPUT([
 Makefile
 data/Makefile
 data/config/Makefile
+data/control/Makefile
+data/control-arm/Makefile
 data/fonts/Makefile
 data/icons/Makefile
 data/icons/buttons/Makefile
@@ -367,8 +369,6 @@ data/lcd/clock/Makefile
 data/lcd/icons/Makefile
 data/license/Makefile
 data/locale/Makefile
-data/control/Makefile
-data/control-arm/Makefile
 data/pictures/Makefile
 data/pictures/backgrounds/Makefile
 data/pictures/screensaver/Makefile

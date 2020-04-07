@@ -5417,7 +5417,7 @@ void CNeutrinoApp::loadKeys(const char * fname)
 #else // #elif  HAVE_SH4_HARDWARE || HAVE_MIPS_HARDWARE
 	g_settings.repeat_blocker = tconfig->getInt32("repeat_blocker", 350);
 	g_settings.repeat_genericblocker = tconfig->getInt32("repeat_genericblocker", 100);
-#fi
+#endif
 	g_settings.longkeypress_duration = tconfig->getInt32("longkeypress_duration", 500); //LONGKEYPRESS_OFF);
 #if HAVE_SH4_HARDWARE
 	g_settings.accept_other_remotes = tconfig->getInt32( "accept_other_remotes", 1);

@@ -450,7 +450,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	g_settings.srs_algo = configfile.getInt32( "srs_algo", 1);
 	g_settings.srs_ref_volume = configfile.getInt32( "srs_ref_volume", 40);
 	g_settings.srs_nmgr_enable = configfile.getInt32( "srs_nmgr_enable", 0);
-#if HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE 
+#if HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
 	g_settings.ac3_pass = configfile.getInt32( "ac3_pass", 1);
 	g_settings.dts_pass = configfile.getInt32( "dts_pass", 1);
 #else

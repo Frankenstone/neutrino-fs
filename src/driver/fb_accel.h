@@ -210,9 +210,23 @@ class CFbAccelTD
 };
 
 class CFbAccelARM
+#if ENABLE_ARM_ACC
+	: public OpenThreads::Thread, public CFbAccel
+#else
 	: public CFbAccel
+#endif
+
 {
 	private:
+#if ENABLE_ARM_ACC
+		void run(void);
+		void blit(void);
+		void _blit(void);
+		bool blit_thread;
+		bool blit_pending;
+		OpenThreads::Condition blit_cond;
+		OpenThreads::Mutex blit_mutex;
+#endif
 		fb_pixel_t *backbuffer;
 	public:
 		CFbAccelARM();
@@ -225,16 +239,27 @@ class CFbAccelARM
 		void set3DMode(Mode3D);
 		Mode3D get3DMode(void);
 #if ENABLE_ARM_ACC
-#if BOXMODEL_BRE2ZE4K || BOXMODEL_HD51 || BOXMODEL_H7
 		void paintRect(const int x, const int y, const int dx, const int dy, const fb_pixel_t col);
-#endif
 #endif
 };
 
 class CFbAccelMIPS
+#if ENABLE_MIPS_ACC
+	: public OpenThreads::Thread, public CFbAccel
+#else
 	: public CFbAccel
+#endif
 {
 	private:
+#if ENABLE_MIPS_ACC
+		void run(void);
+		void blit(void);
+		void _blit(void);
+		bool blit_thread;
+		bool blit_pending;
+		OpenThreads::Condition blit_cond;
+		OpenThreads::Mutex blit_mutex;
+#endif
 		fb_pixel_t *backbuffer;
 	public:
 		CFbAccelMIPS();
@@ -246,6 +271,9 @@ class CFbAccelMIPS
 		void setOsdResolutions();
 		void set3DMode(Mode3D);
 		Mode3D get3DMode(void);
+#if ENABLE_MIPS_ACC
+		void paintRect(const int x, const int y, const int dx, const int dy, const fb_pixel_t col);
+#endif
 };
 
 #endif

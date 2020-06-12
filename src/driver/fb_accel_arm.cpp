@@ -39,11 +39,18 @@
 
 #include <stdlib.h>
 
+#if ENABLE_ARM_ACC
+#include <driver/abstime.h>
+#endif
+
 #include <system/set_threadname.h>
 #include <gui/color.h>
 
 #define LOGTAG "[fb_accel_arm] "
 
+#if ENABLE_ARM_ACC
+#define FBIO_BLIT   0x22
+#endif
 #define FBIO_ACCEL  0x23
 
 static unsigned int displaylist[1024];
@@ -56,7 +63,7 @@ static bool supportblendingflags = true;
 static int fb_fd = -1;
 static int exec_list(void);
 
-#if BOXMODEL_BRE2ZE4K || BOXMODEL_HD51 || BOXMODEL_H7
+#if ENABLE_ARM_ACC
 static bool accumulateoperations = false;
 
 bool bcm_accel_has_alphablending()
@@ -89,7 +96,6 @@ int bcm_accel_sync()
 	return retval;
 }
 
-#if 0
 void bcm_accel_blit(
 		int src_addr, int src_width, int src_height, int src_stride, int src_format,
 		int dst_addr, int dst_width, int dst_height, int dst_stride,
@@ -160,7 +166,6 @@ void bcm_accel_blit(
 
 	if (!accumulateoperations) exec_list();
 }
-#endif //if 0
 
 void bcm_accel_fill(
 		int dst_addr, int dst_width, int dst_height, int dst_stride,
@@ -246,6 +251,9 @@ static int exec_list(void)
 
 CFbAccelARM::CFbAccelARM()
 {
+#if ENABLE_ARM_ACC
+	blit_thread = false;
+#endif
 	fb_name  = "armbox framebuffer";
 	fb_fd = open(FB_DEVICE, O_RDWR);
 	if (fb_fd < 0)
@@ -269,10 +277,21 @@ CFbAccelARM::CFbAccelARM()
 	/* hardware doesn't allow us to detect whether the opcode is working */
 	supportblendingflags = false;
 #endif
+#if ENABLE_ARM_ACC
+	OpenThreads::Thread::start();
+#endif
 }
 
 CFbAccelARM::~CFbAccelARM()
 {
+#if ENABLE_ARM_ACC
+	if (blit_thread)
+	{
+		blit_thread = false;
+		blit(); /* wakes up the thread */
+		OpenThreads::Thread::join();
+	}
+#endif
 	if (fb_fd >= 0)
 	{
 		close(fb_fd);
@@ -410,15 +429,70 @@ void CFbAccelARM::set3DMode(Mode3D m)
 }
 
 #if ENABLE_ARM_ACC
-#if BOXMODEL_BRE2ZE4K || BOXMODEL_HD51 || BOXMODEL_H7
+#define BLIT_INTERVAL_MIN 40
+#define BLIT_INTERVAL_MAX 250
+void CFbAccelARM::run()
+{
+	printf(LOGTAG "run start\n");
+	int64_t last_blit = 0;
+	blit_pending = false;
+	blit_thread = true;
+	blit_mutex.lock();
+	set_threadname("armfb::autoblit");
+	while (blit_thread) {
+		blit_cond.wait(&blit_mutex, blit_pending ? BLIT_INTERVAL_MIN : BLIT_INTERVAL_MAX);
+		int64_t now = time_monotonic_ms();
+		if (now - last_blit < BLIT_INTERVAL_MIN)
+		{
+			blit_pending = true;
+			//printf(LOGTAG "run: skipped, time %" PRId64 "\n", now - last_blit);
+		}
+		else
+		{
+			blit_pending = false;
+			blit_mutex.unlock();
+			_blit();
+			blit_mutex.lock();
+			last_blit = now;
+		}
+	}
+	blit_mutex.unlock();
+	printf(LOGTAG "run end\n");
+}
+
+void CFbAccelARM::blit()
+{
+	//printf(LOGTAG "blit\n");
+	blit_mutex.lock();
+	blit_cond.signal();
+	blit_mutex.unlock();
+}
+
+void CFbAccelARM::_blit()
+{
+	if (ioctl(fd, FBIO_BLIT) < 0)
+		printf("FBIO_BLIT");
+}
+
 void CFbAccelARM::paintRect(const int x, const int y, const int dx, const int dy, const fb_pixel_t col)
 {
 	if(dx <1 || dy <1 )
 		return;
 
 	bcm_accel_fill(fix.smem_start, screeninfo.xres, screeninfo.yres, stride,x, y, dx, dy,col);
+
+	int line = 0;
+	fb_pixel_t *fbp = getFrameBufferPointer() + (swidth * y);
+	int pos;
+	while (line < dy)
+	{
+		for (pos = x; pos < x + dx; pos++)
+			*(fbp + pos) = col;
+		fbp += swidth;
+		line++;
+	}
+
 	mark(x, y, x+dx, y+dy);
 	blit();
 }
-#endif
 #endif

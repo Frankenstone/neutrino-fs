@@ -14,6 +14,12 @@ SUBDIRS = \
 	y-web \
 	zapit
 
+if BOXTYPE_ARMBOX
+SUBDIRS += control-arm
+else
+SUBDIRS += control
+endif
+
 if BOXTYPE_TRIPLE
 SUBDIRS += lcd
 endif

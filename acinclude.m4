@@ -216,6 +216,7 @@ TUXBOX_APPS_DIRECTORY_ONE(flagdir, FLAGDIR, localstatedir, /var, /etc,
 
 dnl automake <= 1.6 needs this specifications
 AC_SUBST(CONFIGDIR)
+AC_SUBST(CONTROLDIR)
 AC_SUBST(DATADIR)
 AC_SUBST(FONTDIR)
 AC_SUBST(FONTDIR_VAR)

@@ -6,7 +6,6 @@ SUBDIRS = \
 	iso-codes \
 	license \
 	locale \
-	neutrino-scripts \
 	pictures \
 	scripts \
 	themes \

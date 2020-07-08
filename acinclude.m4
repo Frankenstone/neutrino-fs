@@ -147,6 +147,9 @@ fi
 TUXBOX_APPS_DIRECTORY_ONE(configdir, CONFIGDIR, localstatedir, /var, /tuxbox/config,
 	[--with-configdir=PATH], [where to find config files])
 
+TUXBOX_APPS_DIRECTORY_ONE(controldir, CONTROLDIR, localstatedir, /var, /tuxbox/control,
+	[--with-controldir=PATH], [where to find control scripts ])
+
 TUXBOX_APPS_DIRECTORY_ONE(datadir, DATADIR, datadir, /share, /tuxbox,
 	[--with-datadir=PATH], [where to find data files])
 

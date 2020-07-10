@@ -2779,7 +2779,7 @@ TIMER_START();
 	if (! zapit_init)
 		DisplayErrorMessage("Zapit initialization failed. This is a fatal error, sorry.");
 
-#ifndef ASSUME_MDEV
+#if 0 //#ifndef ASSUME_MDEV
 	mkdir("/media/sda1", 0755);
 	mkdir("/media/sdb1", 0755);
 	my_system(3, "mount", "/dev/sda1", "/media/sda1");

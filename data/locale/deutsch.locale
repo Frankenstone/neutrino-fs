@@ -2649,7 +2649,7 @@ videomenu.pip_error PiP Startfehler
 videomenu.psi Farbeinstellungen
 videomenu.psi.brightness Helligkeit
 videomenu.psi.contrast Kontrast
-videomenu.psi.reset Standard-Einstellungen
+videomenu.psi.reset Standard
 videomenu.psi.saturation Sättigung
 videomenu.psi.step Videoregler-Schrittweite
 videomenu.psi.tint Farbton

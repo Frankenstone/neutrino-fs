@@ -609,6 +609,32 @@ int CVideoSettings::showVideoSetup()
 	videosetup->addItem(zm);
 #endif
 
+#if HAVE_ARM_HARDWARE
+	videosetup->addItem(new CMenuSeparator(CMenuSeparator::LINE | CMenuSeparator::STRING, LOCALE_VIDEOMENU_PSI));
+	CMenuOptionNumberChooser *mc;
+	CPSISetup *psiSetup = CPSISetup::getInstance();
+
+	mc = new CMenuOptionNumberChooser(LOCALE_VIDEOMENU_PSI_STEP, (int *)&g_settings.psi_step, true, 1, 100, NULL);
+	mc->setHint("", LOCALE_MENU_HINT_VIDEO_PSI_STEP);
+	videosetup->addItem(mc);
+
+	mc = new CMenuOptionNumberChooser(LOCALE_VIDEOMENU_PSI_CONTRAST, (int *)&g_settings.psi_contrast, true, 0, 255, psiSetup);
+	mc->setHint("", LOCALE_MENU_HINT_VIDEO_CONTRAST);
+	videosetup->addItem(mc);
+
+	mc = new CMenuOptionNumberChooser(LOCALE_VIDEOMENU_PSI_SATURATION, (int *)&g_settings.psi_saturation, true, 0, 255, psiSetup);
+	mc->setHint("", LOCALE_MENU_HINT_VIDEO_SATURATION);
+	videosetup->addItem(mc);
+
+	mc = new CMenuOptionNumberChooser(LOCALE_VIDEOMENU_PSI_BRIGHTNESS, (int *)&g_settings.psi_brightness, true, 0, 255, psiSetup);
+	mc->setHint("", LOCALE_MENU_HINT_VIDEO_BRIGHTNESS);
+	videosetup->addItem(mc);
+
+	mc = new CMenuOptionNumberChooser(LOCALE_VIDEOMENU_PSI_TINT, (int *)&g_settings.psi_tint, true, 0, 255, psiSetup);
+	mc->setHint("", LOCALE_MENU_HINT_VIDEO_TINT);
+	videosetup->addItem(mc);
+#endif
+
 	int res = videosetup->exec(NULL, "");
 	selected = videosetup->getSelected();
 #if HAVE_SH4_HARDWARE

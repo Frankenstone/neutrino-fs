@@ -209,6 +209,14 @@ struct SNeutrinoSettings
 	uint32_t video_mixer_color;
 #endif
 
+#if HAVE_ARM_HARDWARE
+	int psi_contrast;
+	int psi_saturation;
+	int psi_brightness;
+	int psi_tint;
+	int psi_step;
+#endif
+
 #ifdef BOXMODEL_CS_HD2
 	int brightness;
 	int contrast;
@@ -915,6 +923,7 @@ struct SNeutrinoSettings
 
 	//movieplayer
 	int   movieplayer_repeat_on;
+	int movieplayer_display_playtime;
 	std::string tmdb_api_key;
 	int tmdb_enabled;
 

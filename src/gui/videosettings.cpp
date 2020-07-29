@@ -575,7 +575,9 @@ int CVideoSettings::showVideoSetup()
 #if HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
 	videosetup->addItem(GenericMenuSeparatorLine);
 
-	CMenuForwarder *mf = new CMenuForwarder(LOCALE_THREE_D_SETTINGS, true, NULL, CNeutrinoApp::getInstance(), "3dmode", CRCInput::RC_green);
+	CMenuForwarder *mf;
+
+	mf = new CMenuForwarder(LOCALE_THREE_D_SETTINGS, true, NULL, CNeutrinoApp::getInstance(), "3dmode", CRCInput::RC_green);
 	mf->setHint("", LOCALE_MENU_HINT_VIDEO_THREE_D);
 	videosetup->addItem(mf);
 #endif // HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
@@ -621,7 +623,7 @@ int CVideoSettings::showVideoSetup()
 	videosetup->addItem(mc);
 #endif
 
-	CMenuForwarder *mf = new CMenuForwarder(LOCALE_VIDEOMENU_PSI, true, NULL, psiSetup, NULL);
+	mf = new CMenuForwarder(LOCALE_VIDEOMENU_PSI, true, NULL, psiSetup, NULL);
 	mf->setHint("", LOCALE_MENU_HINT_VIDEO_PSI);
 	videosetup->addItem(mf);
 

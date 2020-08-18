@@ -178,7 +178,7 @@ void* CLCD::TimeThread(void *)
 	while (CLCD::getInstance()->thread_running) {
 		sleep(1);
 		if (g_info.hw_caps->display_can_set_brightness)
- 		{
+		{
 			struct stat buf;
 			if (stat("/tmp/vfd.locked", &buf) == -1) {
 				CLCD::getInstance()->showTime();
@@ -351,7 +351,7 @@ void CLCD::showTime(bool force)
 			close(fd);
 #endif
 //			printf("#### vor display !!!!!  \n");
- 			if ((g_info.hw_caps->display_type == HW_DISPLAY_LINE_TEXT) || (g_info.hw_caps->display_type == HW_DISPLAY_LED_NUM))
+			if ((g_info.hw_caps->display_type == HW_DISPLAY_LINE_TEXT) || (g_info.hw_caps->display_type == HW_DISPLAY_LED_NUM))
 			{
 #if HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
 //				printf("+++ Mode = %i  lcd_info_line %i\n", mode, g_settings.lcd_info_line);
@@ -591,7 +591,7 @@ void CLCD::setBrightness(int dimm)
 int CLCD::getBrightness()
 {
 	if (g_info.hw_caps->display_can_set_brightness)
- 	{
+	{
 		if(g_settings.lcd_setting[SNeutrinoSettings::LCD_BRIGHTNESS] > 15)
 			g_settings.lcd_setting[SNeutrinoSettings::LCD_BRIGHTNESS] = 15;
 		return g_settings.lcd_setting[SNeutrinoSettings::LCD_BRIGHTNESS];
@@ -602,7 +602,7 @@ int CLCD::getBrightness()
 void CLCD::setBrightnessStandby(int bright)
 {
 	if (g_info.hw_caps->display_can_set_brightness)
- 	{
+	{
 		g_settings.lcd_setting[SNeutrinoSettings::LCD_STANDBY_BRIGHTNESS] = bright;
 		setlcdparameter();
 	}
@@ -611,7 +611,7 @@ void CLCD::setBrightnessStandby(int bright)
 int CLCD::getBrightnessStandby()
 {
 	if (g_info.hw_caps->display_can_set_brightness)
- 	{
+	{
 		if(g_settings.lcd_setting[SNeutrinoSettings::LCD_STANDBY_BRIGHTNESS] > 15)
 			g_settings.lcd_setting[SNeutrinoSettings::LCD_STANDBY_BRIGHTNESS] = 15;
 		return g_settings.lcd_setting[SNeutrinoSettings::LCD_STANDBY_BRIGHTNESS];

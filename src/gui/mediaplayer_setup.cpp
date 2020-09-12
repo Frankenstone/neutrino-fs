@@ -104,7 +104,7 @@ int CMediaPlayerSetup::showMediaPlayerSetup()
 	mf->setHint(NEUTRINO_ICON_HINT_TVMODE /* FIXME */, LOCALE_MENU_HINT_XMLTV_SETUP);
 	mediaSetup->addItem(mf);
 
-	mediaSetup->addItem(GenericMenuSeparator);
+	mediaSetup->addItem(GenericMenuSeparatorLine);
 
 	int shortcut = 1;
 	CAudioPlayerSetup asetup;

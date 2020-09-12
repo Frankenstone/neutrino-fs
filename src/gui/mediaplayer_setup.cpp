@@ -104,7 +104,7 @@ int CMediaPlayerSetup::showMediaPlayerSetup()
 	mf->setHint(NEUTRINO_ICON_HINT_TVMODE /* FIXME */, LOCALE_MENU_HINT_XMLTV_SETUP);
 	mediaSetup->addItem(mf);
 
-//	mediaSetup->addItem(new CMenuSeparator(CMenuSeparator::LINE | CMenuSeparator::STRING, LOCALE_AUDIO_PICTURE_HEAD));
+	mediaSetup->addItem(GenericMenuSeparator);
 
 	int shortcut = 1;
 	CAudioPlayerSetup asetup;
@@ -123,8 +123,6 @@ int CMediaPlayerSetup::showMediaPlayerSetup()
 	mf = new CMenuForwarder(LOCALE_MOVIEBROWSER_HEAD, true, NULL, &msetup, "show_menu", CRCInput::convertDigitToKey(shortcut++));
 	mf->setHint(NEUTRINO_ICON_HINT_MB, LOCALE_MENU_HINT_MOVIEBROWSER_SETUP);
 	mediaSetup->addItem(mf);
-
-//	mediaSetup->addItem(GenericMenuSeparator);
 
 	CMenuOptionChooser *mc;
 	mc = new CMenuOptionChooser(LOCALE_MOVIEPLAYER_DISPLAY_PLAYTIME, &g_settings.movieplayer_display_playtime, OPTIONS_OFF0_ON1_OPTIONS, OPTIONS_OFF0_ON1_OPTION_COUNT, g_info.hw_caps->display_xres >= 8);

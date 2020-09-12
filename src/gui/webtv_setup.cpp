@@ -127,10 +127,10 @@ int CWebTVSetup::exec(CMenuTarget* parent, const std::string & actionKey)
 	}
 	if (actionKey == "e" /* enter */)
 	{
-		std::string tpl = "http://xxx.xxx.xxx.xxx/control/xmltv.m3u";
+		std::string tpl = "http://xxx.xxx.xxx.xxx/control/xmltv.m3u?mode=tv";
 		std::string entry = tpl;
 
-		CKeyboardInput *e = new CKeyboardInput(LOCALE_WEBTV_XML_ENTER, &entry, 50);
+		CKeyboardInput *e = new CKeyboardInput(LOCALE_WEBTV_XML_ENTER, &entry, 52);
 		e->exec(this, "");
 		delete e;
 
@@ -177,7 +177,7 @@ int CWebTVSetup::Show()
 	                   (!CZapit::getInstance()->GetCurrentChannel()->getScriptName().empty());
 
 	CMenuForwarder *mf;
-	int shortcut = 1;
+	int shortcut = 0;
 	mf = new CMenuForwarder(LOCALE_LIVESTREAM_SCRIPTPATH, !_mode_webtv, g_settings.livestreamScriptPath, this, "script_path", CRCInput::convertDigitToKey(shortcut++));
 	m->addItem(mf);
 #if 0

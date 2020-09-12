@@ -106,7 +106,7 @@ int CMediaPlayerSetup::showMediaPlayerSetup()
 
 	mediaSetup->addItem(GenericMenuSeparatorLine);
 
-	int shortcut = 1;
+	int shortcut = 0;
 	CAudioPlayerSetup asetup;
 	mf = new CMenuForwarder(LOCALE_AUDIOPLAYER_NAME, true, NULL, &asetup, "", CRCInput::convertDigitToKey(shortcut++));
 	mf->setHint(NEUTRINO_ICON_HINT_APLAY, LOCALE_MENU_HINT_APLAY_SETUP);

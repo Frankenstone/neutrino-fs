@@ -130,7 +130,7 @@ bool CLCD4lSetup::changeNotify(const neutrino_locale_t OptionName, void * /*data
 
 int CLCD4lSetup::show()
 {
-	int shortcut = 1;
+	int shortcut = 0;
 
 	int temp_lcd4l_dpf_type = g_settings.lcd4l_dpf_type;
 	int temp_lcd4l_skin = g_settings.lcd4l_skin;

@@ -910,7 +910,7 @@ _show_menu:
 		stat("/", &root_st);
 
 		sort(hdd_list.begin(), hdd_list.end(), cmp_hdd_by_name());
-		int shortcut = 1;
+		int shortcut = 0;
 		hddmenu->addItem(new CMenuSeparator(CMenuSeparator::LINE | CMenuSeparator::STRING, LOCALE_HDD_MOUNT_UMOUNT));
 		for (std::vector<hdd_s>::iterator it = hdd_list.begin(); it != hdd_list.end(); ++it) {
 			const char * rec_icon = NULL;

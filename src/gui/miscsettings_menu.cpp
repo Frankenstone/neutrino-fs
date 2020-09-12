@@ -280,7 +280,7 @@ const CMenuOptionChooser::keyval_ext SLEEPTIMER_MIN_OPTIONS[SLEEPTIMER_MIN_OPTIO
 //show misc settings menue
 int CMiscMenue::showMiscSettingsMenu()
 {
-	int shortcut = 0;
+	int shortcut = 1;
 
 	//misc settings
 	fanNotifier = new CFanControlNotifier();

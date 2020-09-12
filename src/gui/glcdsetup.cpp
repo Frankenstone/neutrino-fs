@@ -231,7 +231,7 @@ void GLCD_Menu::GLCD_Menu_Settings()
 
 	m.addItem(new CMenuForwarder(LOCALE_LCD4L_DPF_TYPE, (nGLCD::getInstance()->GetConfigSize() > 1),
 							     nGLCD::getInstance()->GetConfigName(g_settings.glcd_selected_config).c_str(), this, "select_driver"));
-	int shortcut = 0;
+	int shortcut = 1;
 	m.addItem(GenericMenuSeparatorLine);
 	m.addItem(new CMenuOptionChooser(LOCALE_GLCD_SELECT_FG, &color_fg,
 				GLCD_COLOR_OPTIONS, GLCD_COLOR_OPTION_COUNT, true, this,

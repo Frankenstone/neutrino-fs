@@ -588,7 +588,7 @@ const CMenuOptionChooser::keyval OPTIONS_CHANNELLOGO_POSITION[OPTIONS_CHANNELLOG
 //show osd setup
 int COsdSetup::showOsdSetup()
 {
-	int shortcut = 0;
+	int shortcut = 1;
 	CMenuOptionChooser * mc = NULL;
 
 	//osd main menu

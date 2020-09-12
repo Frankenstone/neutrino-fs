@@ -132,7 +132,7 @@ int CNetworkServiceSetup::exec(CMenuTarget* parent, const std::string & /*action
 
 int CNetworkServiceSetup::showNetworkServiceSetup()
 {
-	int shortcut = 0;
+	int shortcut = 1;
 
 	CMenuWidget* setup = new CMenuWidget(LOCALE_MAINSETTINGS_NETWORK, NEUTRINO_ICON_SETTINGS, width, MN_WIDGET_ID_NETWORKSETUP_SERVICES);
 

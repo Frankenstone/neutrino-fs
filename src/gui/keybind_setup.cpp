@@ -356,7 +356,7 @@ int CKeybindSetup::showKeySetup()
 	ms_number_format += g_Locale->getText(LOCALE_UNIT_SHORT_MILLISECOND);
 	CMenuOptionNumberChooser *cc;
 
-	int shortcut = 0;
+	int shortcut = 1;
 
 	cc = new CMenuOptionNumberChooser(LOCALE_KEYBINDINGMENU_LONGKEYPRESS_DURATION,
 		&g_settings.longkeypress_duration, true, LONGKEYPRESS_OFF, 9999, NULL,
@@ -426,7 +426,7 @@ int CKeybindSetup::showKeySetup()
 
 void CKeybindSetup::showKeyBindSetup(CMenuWidget *bindSettings)
 {
-	int shortcut = 0;
+	int shortcut = 1;
 
 	CMenuForwarder * mf;
 

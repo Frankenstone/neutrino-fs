@@ -25,7 +25,7 @@
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the 
+	along with this program; if not, write to the
 	Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 	Boston, MA  02110-1301, USA.
 */
@@ -242,8 +242,8 @@ bool CFlashUpdate::selectHttpImage(void)
 	showStatusMessageUTF(g_Locale->getText(LOCALE_FLASHUPDATE_GETINFOFILE));
 
 	char current[200];
-	snprintf(current, 200, "%s: %s %s %s %s %s", g_Locale->getText(LOCALE_FLASHUPDATE_CURRENTVERSION_SEP), curInfo.getReleaseCycle(), 
-		g_Locale->getText(LOCALE_FLASHUPDATE_CURRENTVERSIONDATE), curInfo.getDate(), 
+	snprintf(current, 200, "%s: %s %s %s %s %s", g_Locale->getText(LOCALE_FLASHUPDATE_CURRENTVERSION_SEP), curInfo.getReleaseCycle(),
+		g_Locale->getText(LOCALE_FLASHUPDATE_CURRENTVERSIONDATE), curInfo.getDate(),
 		g_Locale->getText(LOCALE_FLASHUPDATE_CURRENTVERSIONTIME), curInfo.getTime());
 
 	CMenuWidget SelectionWidget(LOCALE_FLASHUPDATE_SELECTIMAGE, NEUTRINO_ICON_UPDATE, listWidth, MN_WIDGET_ID_IMAGESELECTOR);
@@ -1002,25 +1002,7 @@ int CFlashExpert::showMTDSelector(const std::string & actionkey)
 	for(int lx=0;lx<mtdInfo->getMTDCount();lx++) {
 		char sActionKey[20];
 		bool enabled = true;
-<<<<<<< HEAD
-#ifdef BOXMODEL_CS_HD2
-		// disable write uboot / uldr / env
-		if ((actionkey == "writemtd") && (lx == mtdInfo->findMTDNumberFromName("u-boot") || 
-			                          lx == mtdInfo->findMTDNumberFromName("uldr") ||
-			                          lx == mtdInfo->findMTDNumberFromName("env")))
-			enabled = false;
-		if (actionkey == "readmtd") {
-			// Enabled when file system is mounted
-			if (lx == mtdInfo->findMTDNumberFromName("var"))
-				enabled = (getJFFS2MountPoint(lx) == "") ? false : true;
-			else if (lx == mtdInfo->findMTDNumberFromName("root1"))
-				enabled = (getJFFS2MountPoint(lx) == "") ? false : true;
-		}
-		if (lx == 3)
-			mtdselector->addItem(GenericMenuSeparatorLine);
-#else
-=======
->>>>>>> b83da6ccb9... update.cpp: remove coolstream hardware"
+
 		// disable write uboot
 		if ((actionkey == "writemtd") && (lx == mtdInfo->findMTDNumberFromName("U-Boot")))
 			enabled = false;

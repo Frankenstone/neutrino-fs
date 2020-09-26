@@ -2258,6 +2258,12 @@ bool CZapit::StartPlayBack(CZapitChannel *thisChannel)
 		pcrDemux->Start();
 	}
 
+	/* start video */
+	if (video_pid) {
+		videoDemux->Start();
+		videoDecoder->Start(0, pcr_pid, video_pid);
+	}
+
 	/* select audio output and start audio */
 	if (audio_pid) {
 		SetAudioStreamType(thisChannel->getAudioChannel()->audioChannelType);
@@ -2265,10 +2271,6 @@ bool CZapit::StartPlayBack(CZapitChannel *thisChannel)
 		audioDecoder->Start();
 	}
 
-	if (video_pid) {
-		videoDemux->Start();
-		videoDecoder->Start(0, pcr_pid, video_pid);
-	}
 #ifdef USE_VBI
 	if(teletext_pid)
 		videoDecoder->StartVBI(teletext_pid);

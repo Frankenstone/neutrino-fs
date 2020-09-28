@@ -379,10 +379,14 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	CThemes::getTheme(configfile);
 
 #ifdef ENABLE_LCD4LINUX
+#if HAVE_ARM_HARDWARE
+	g_settings.lcd4l_support = configfile.getInt32("lcd4l_support" , 2);
+#else
 	g_settings.lcd4l_support = configfile.getInt32("lcd4l_support" , 0);
-	g_settings.lcd4l_logodir = configfile.getString("lcd4l_logodir", LOGODIR);
-	g_settings.lcd4l_dpf_type = configfile.getInt32("lcd4l_dpf_type", 0);
-	g_settings.lcd4l_skin = configfile.getInt32("lcd4l_skin" , 0);
+#endif
+	g_settings.lcd4l_logodir = configfile.getString("lcd4l_logodir", "/swap/logo-lcd");
+	g_settings.lcd4l_dpf_type = configfile.getInt32("lcd4l_dpf_type", 1);
+	g_settings.lcd4l_skin = configfile.getInt32("lcd4l_skin" , 1);
 	g_settings.lcd4l_skin_radio = configfile.getInt32("lcd4l_skin_radio" , 0);
 	g_settings.lcd4l_brightness = configfile.getInt32("lcd4l_brightness", 7);
 	g_settings.lcd4l_brightness_standby = configfile.getInt32("lcd4l_brightness_standby", 3);
@@ -459,7 +463,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	g_settings.ac3_pass = configfile.getInt32( "ac3_pass", 1);
 	g_settings.dts_pass = configfile.getInt32( "dts_pass", 1);
 #else
-	g_settings.hdmi_dd = configfile.getInt32( "hdmi_dd", 0);
+	g_settings.hdmi_dd = configfile.getInt32( "hdmi_dd", 2);
 	g_settings.spdif_dd = configfile.getInt32( "spdif_dd", 1);
 #endif // HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
 	g_settings.analog_out = configfile.getInt32( "analog_out", 0);
@@ -648,7 +652,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	g_settings.epg_old_events       = configfile.getInt32("epg_old_events", 0);
 	g_settings.epg_max_events       = configfile.getInt32("epg_max_events", 80000);
 #if HAVE_SH4_HARDWARE || HAVE_ARM_HARDWARE
-	g_settings.epg_dir              = configfile.getString("epg_dir", "/var/epg");
+	g_settings.epg_dir              = configfile.getString("epg_dir", "/mnt/nfs/epg");
 #else
 	g_settings.epg_dir              = configfile.getString("epg_dir", "/media/sda1/epg");
 #endif
@@ -656,7 +660,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	// NTP-Server for sectionsd
 	g_settings.network_ntpserver    = configfile.getString("network_ntpserver", "time.fu-berlin.de");
 	g_settings.network_ntprefresh   = configfile.getString("network_ntprefresh", "30" );
-	g_settings.network_ntpenable    = configfile.getBool("network_ntpenable", false);
+	g_settings.network_ntpenable    = configfile.getBool("network_ntpenable", true);
 
 	g_settings.ifname = configfile.getString("ifname", "eth0");
 
@@ -740,11 +744,11 @@ int CNeutrinoApp::loadSetup(const char * fname)
 		g_settings.network_nfs[i].mount_options2 = configfile.getString("network_nfs_mount_options2_" + i_str, "nolock,rsize=32768,wsize=32768" );
 		g_settings.network_nfs[i].mac = configfile.getString("network_nfs_mac_" + i_str, "11:22:33:44:55:66");
 	}
-	g_settings.network_nfs_audioplayerdir = configfile.getString( "network_nfs_audioplayerdir", "/hdd/music" );
-	g_settings.network_nfs_picturedir = configfile.getString( "network_nfs_picturedir", "/hdd/pictures" );
-	g_settings.network_nfs_moviedir = configfile.getString( "network_nfs_moviedir", "/hdd/movie" );
-	g_settings.network_nfs_recordingdir = configfile.getString( "network_nfs_recordingdir", "/hdd/movie" );
-	g_settings.timeshiftdir = configfile.getString( "timeshiftdir", "/hdd/timeshift" );
+	g_settings.network_nfs_audioplayerdir = configfile.getString( "network_nfs_audioplayerdir", "/mnt/nfs/audio" );
+	g_settings.network_nfs_picturedir = configfile.getString( "network_nfs_picturedir", "/mnt/nfs/pictures" );
+	g_settings.network_nfs_moviedir = configfile.getString( "network_nfs_moviedir", "/mnt/nfs/video" );
+	g_settings.network_nfs_recordingdir = configfile.getString( "network_nfs_recordingdir", "/mnt/nfs/movie" );
+	g_settings.timeshiftdir = configfile.getString( "timeshiftdir", "/mnt/nfs/timeshift" );
 #else
 		g_settings.network_nfs[i].mount_options1 = configfile.getString("network_nfs_mount_options1_" + i_str, "ro,soft,udp" );
 		g_settings.network_nfs[i].mount_options2 = configfile.getString("network_nfs_mount_options2_" + i_str, "nolock,rsize=8192,wsize=8192" );
@@ -835,7 +839,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 
 #if HAVE_SH4_HARDWARE || HAVE_ARM_HARDWARE
 	g_settings.plugin_hdd_dir = configfile.getString( "plugin_hdd_dir", "/var/tuxbox/plugins" );
-	g_settings.logo_hdd_dir = configfile.getString( "logo_hdd_dir", "/logos" );
+	g_settings.logo_hdd_dir = configfile.getString( "logo_hdd_dir", "/swap/logos" );
 #else
 	g_settings.plugin_hdd_dir = configfile.getString( "plugin_hdd_dir", "/media/sda1/plugins" );
 	g_settings.logo_hdd_dir = configfile.getString( "logo_hdd_dir", "/media/sda1/logos" );
@@ -920,7 +924,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	g_settings.auto_cover = configfile.getInt32( "auto_cover",  0);
 
 #if HAVE_SH4_HARDWARE || HAVE_ARM_HARDWARE
-	g_settings.screenshot_dir = configfile.getString( "screenshot_dir", "/hdd/movie" );
+	g_settings.screenshot_dir = configfile.getString( "screenshot_dir", "/mnt/nfs/screenshot" );
 #else
 	g_settings.screenshot_dir = configfile.getString( "screenshot_dir", "/media/sda1/movie" );
 #endif

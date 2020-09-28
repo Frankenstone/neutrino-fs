@@ -1273,7 +1273,6 @@ void COsdSetup::showOsdChannellogosSetup(CMenuWidget *menu_channellogos)
 	mc->setHint("", LOCALE_MENU_HINT_INFOBAR_DEFAULT_LOGO);
 	menu_channellogos->addItem(mc);
 
-
 	menu_channellogos->addItem(GenericMenuSeparatorLine);
 
 	// show channellogos

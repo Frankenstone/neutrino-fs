@@ -48,6 +48,7 @@
 #include <driver/radiotext.h>
 #include <zapit/capmt.h>
 #include <zapit/zapit.h>
+#include <gui/infoviewer.h>
 #include <gui/movieplayer.h>
 #include <eitd/sectionsd.h>
 #include <hardware/video.h>
@@ -756,6 +757,13 @@ void CLCD4l::ParseInfo(uint64_t parseID, bool newID, bool firstRun)
 
 	if (m_ModeChannel)
 	{
+		if (CNeutrinoApp::getInstance()->getMode() == NeutrinoModes::mode_webtv || CNeutrinoApp::getInstance()->getMode() == NeutrinoModes::mode_webradio)
+		{
+			// FIXME: Doesn't work with timing.infobar_tv/radio=0
+			Event = g_InfoViewer->get_livestreamInfo1();
+			Event += "\n" + g_InfoViewer->get_livestreamInfo2();
+		}
+
 		t_channel_id channel_id = parseID & 0xFFFFFFFFFFFFULL;
 
 		CZapitChannel * channel = CZapit::getInstance()->GetCurrentChannel();
@@ -802,6 +810,7 @@ void CLCD4l::ParseInfo(uint64_t parseID, bool newID, bool firstRun)
 			tm_struct = localtime(&CurrentNext.next_zeit.startzeit);
 			snprintf(End, sizeof(End), "%02d:%02d", tm_struct->tm_hour, tm_struct->tm_min);
 		}
+
 	}
 	else if (parseID == NeutrinoModes::mode_audio)
 	{
@@ -1021,7 +1030,8 @@ std::string CLCD4l::hexStr(unsigned char* data)
 
 bool CLCD4l::GetLogoName(uint64_t channel_id, std::string channel_name, std::string &logo)
 {
-	return g_PicViewer->GetLogoName(channel_id, channel_name, logo);
+	return g_PicViewer->GetLogoName(channel_id, channel_name, logo, NULL, NULL, g_settings.lcd4l_logodir);
+
 #if 0
 	int h, i, j;
 	char str_channel_id[16];

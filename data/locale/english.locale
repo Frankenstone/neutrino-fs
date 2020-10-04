@@ -123,13 +123,6 @@ adzap.zap_off off
 adzap.zap_to_last_channel to last channel
 adzap.zap_to_start_channel to start channel
 apidselector.head Select language
-audio.srs_algo Type
-audio.srs_algo_heavy Heavy
-audio.srs_algo_light Light
-audio.srs_algo_normal Normal
-audio.srs_iq SRS TruVolume algo
-audio.srs_nmgr Noise manager
-audio.srs_volume Reference volume
 audiomenu.PCMOffset Volume Decrease PCM
 audiomenu.ac3 AC3 passthrough
 audiomenu.analog_mode Analog mode
@@ -945,7 +938,6 @@ keybindingmenu.remotecontrol_code_msg2 at the same time, after that press the bu
 keybindingmenu.remotecontrol_code_not_save The remote control code has not been changed !
 keybindingmenu.remotecontrol_code_save Save new code
 keybindingmenu.remotecontrol_hardware Hardware
-keybindingmenu.remotecontrol_hardware_coolstream CST
 keybindingmenu.remotecontrol_hardware_dbox d-box Nokia (old)
 keybindingmenu.remotecontrol_hardware_msg_part1 The remote control has been changed from '
 keybindingmenu.remotecontrol_hardware_msg_part2 ' to '
@@ -1064,7 +1056,7 @@ mainsettings.language Language and timezone
 mainsettings.lcd Front-Panel
 mainsettings.manage Manage settings
 mainsettings.misc Extended settings
-mainsettings.multimedia Multimedia
+mainsettings.multimedia Media
 mainsettings.network Network
 mainsettings.osd OSD
 mainsettings.recording Recording
@@ -1087,7 +1079,7 @@ menu.hint_adzap_writedata Write data according to adzap status to /tmp/adzap.dat
 menu.hint_adzap_zap Zap to last viewed channel or to start channel during timer activation
 menu.hint_aplay Audio player
 menu.hint_aplay_setup Change title display, start directory, screen saver and more
-menu.hint_audio Audio output, DD\nSRS True volume options
+menu.hint_audio Audio output, DD volume options
 menu.hint_audio_ac3 Pass AC3 audio tracks unchanged
 menu.hint_audio_adjust_vol_ac3 Channel specific volume adjustment for AC3 streams
 menu.hint_audio_adjust_vol_clear Clear all saved values for PCM and AC3 streams
@@ -1098,10 +1090,6 @@ menu.hint_audio_dd Auto-switch to DolbyDigital audio pid,\nif available
 menu.hint_audio_dts Pass DTS audio tracks unchanged
 menu.hint_audio_hdmi_dd DolbyDigital over HDMI: off - decoded\nauto  if supported by device, force
 menu.hint_audio_spdif_dd DolbyDigital over optical output
-menu.hint_audio_srs SRS TruVolume control volume jumps\nat content changes
-menu.hint_audio_srs_algo Amount of control, light or normal
-menu.hint_audio_srs_nmgr Noise manager
-menu.hint_audio_srs_volume Reference level to maintain
 menu.hint_audio_volstart Always set selected volume value on boot
 menu.hint_audio_volstep Volume +/- keys increase/decrease step
 menu.hint_audioplayer_defdir Default audioplayer directory
@@ -2531,15 +2519,15 @@ timing.numericzap Numeric Zap
 timing.popup_messages Popup messages
 timing.static_messages Interactive messages
 timing.volumebar Volume bar
+tmdb.api_key TMDb API key
+tmdb.enabled TMDb support
+tmdb.info TMDb-Info
+tmdb.read_data Search TMDb data ...
 tunersetup.cable Cable (DVB-C)
 tunersetup.hybrid Hybrid (DVB-C/T/T2)
 tunersetup.mode Operation mode
 tunersetup.power 5V supply on DVB-T/T2 channels
 tunersetup.terr Terrestrial (DVB-T/T2)
-tmdb.api_key TMDb API key
-tmdb.enabled TMDb support
-tmdb.info TMDb-Info
-tmdb.read_data Search TMDb data ...
 unicable.lnb Unicable Input
 unicable.pin Unicable PIN
 unicable.pin_hint PIN (1 - 255) for user frequency\n0 means inactive / off

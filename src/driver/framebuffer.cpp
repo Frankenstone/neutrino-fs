@@ -52,9 +52,6 @@
 #include <global.h>
 #include <video.h>
 #include <cs_api.h>
-#ifdef HAVE_COOL_HARDWARE
-#include <cnxtfb.h>
-#endif
 
 extern cVideo * videoDecoder;
 
@@ -409,7 +406,7 @@ int CFrameBuffer::setMode(unsigned int /*nxRes*/, unsigned int /*nyRes*/, unsign
 	}
 	return 0;
 }
-#if 0 
+#if 0
 //never used
 void CFrameBuffer::setTransparency( int /*tr*/ )
 {
@@ -417,17 +414,13 @@ void CFrameBuffer::setTransparency( int /*tr*/ )
 #endif
 void CFrameBuffer::setBlendMode(uint8_t mode)
 {
-#ifdef HAVE_COOL_HARDWARE
-	if (ioctl(fd, FBIO_SETBLENDMODE, mode))
-		printf("FBIO_SETBLENDMODE failed.\n");
-#endif
 }
 
 void CFrameBuffer::setBlendLevel(int level)
 {
 }
 
-#if 0 
+#if 0
 //never used
 void CFrameBuffer::setAlphaFade(int in, int num, int tr)
 {
@@ -1225,7 +1218,7 @@ void CFrameBuffer::paintLine(int xa, int ya, int xb, int yb, const fb_pixel_t co
 		}
 	}
 }
-#if 0 
+#if 0
 //never used
 void CFrameBuffer::setBackgroundColor(const fb_pixel_t color)
 {
@@ -1514,7 +1507,7 @@ void CFrameBuffer::RestoreScreen(int x, int y, int dx, int dy, fb_pixel_t * cons
 	}
 	checkFbArea(x, y, dx, dy, false);
 }
-#if 0 
+#if 0
 //never used
 void CFrameBuffer::switch_signal (int signal)
 {
@@ -1540,7 +1533,7 @@ void CFrameBuffer::switch_signal (int signal)
 			memset(thiz->lfb, 0, thiz->stride * thiz->yRes);
 	}
 }
-#endif 
+#endif
 
 void CFrameBuffer::Clear()
 {

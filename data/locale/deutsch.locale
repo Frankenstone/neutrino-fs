@@ -123,13 +123,6 @@ adzap.zap_off aus
 adzap.zap_to_last_channel auf letzten Kanal
 adzap.zap_to_start_channel auf Start-Kanal
 apidselector.head Sprachauswahl
-audio.srs_algo Art
-audio.srs_algo_heavy stark
-audio.srs_algo_light einfach
-audio.srs_algo_normal normal
-audio.srs_iq SRS TruVolume Technologie
-audio.srs_nmgr Noise-Manager
-audio.srs_volume Referenzlautstärke
 audiomenu.PCMOffset Lautstärkeabsenkung PCM
 audiomenu.ac3 AC3 durchleiten
 audiomenu.analog_mode Analog Modus
@@ -945,7 +938,6 @@ keybindingmenu.remotecontrol_code_msg2 gleichzeitig betätigen, danach: OK Taste
 keybindingmenu.remotecontrol_code_not_save Der Code der Fernbedienung wurde nicht geändert !
 keybindingmenu.remotecontrol_code_save Neuen Code speichern
 keybindingmenu.remotecontrol_hardware Hardware
-keybindingmenu.remotecontrol_hardware_coolstream CST
 keybindingmenu.remotecontrol_hardware_dbox DBox Nokia (alt)
 keybindingmenu.remotecontrol_hardware_msg_part1 Die Fernbedienung wurde von '
 keybindingmenu.remotecontrol_hardware_msg_part2 ' auf '
@@ -1064,7 +1056,7 @@ mainsettings.language Sprache
 mainsettings.lcd Front-Panel
 mainsettings.manage Einstellungen verwalten
 mainsettings.misc Erweiterte Einstellungen
-mainsettings.multimedia Multimedia
+mainsettings.multimedia Medien
 mainsettings.network Netzwerk
 mainsettings.osd OSD
 mainsettings.recording Aufnahme
@@ -1087,7 +1079,7 @@ menu.hint_adzap_writedata Schreibe Daten über den Status des Werbezappers nach 
 menu.hint_adzap_zap Umschalten bei Timer-Aktivierung auf zuletzt gesehenen Kanal oder auf Start-Kanal
 menu.hint_aplay Audioplayer
 menu.hint_aplay_setup Ändern Sie Audioplayer-Einstellungen wie Titel-Anzeige, Startverzeichnis oder Bildschirmschoner.
-menu.hint_audio Audio-Ausgang, Dolby Digital und SRS TruVolume Optionen usw.
+menu.hint_audio Audio-Ausgang, Dolby Digital Optionen usw.
 menu.hint_audio_ac3 AC3 Tonspuren unverändert durchleiten
 menu.hint_audio_adjust_vol_ac3 Lautstärkeanpassung für AC3-Tonspuren
 menu.hint_audio_adjust_vol_clear Alle gespeicherten Werte für AC3- und PCM-Tonspuren löschen
@@ -1098,10 +1090,6 @@ menu.hint_audio_dd Ist diese Option aktiviert, wird automatisch auf Dolby Digita
 menu.hint_audio_dts DTS Tonspuren unverändert durchleiten
 menu.hint_audio_hdmi_dd Bei aktiver Option wird über den HDMI-Ausgang der Dolby Digital Ton ausgegeben
 menu.hint_audio_spdif_dd Bei aktiver Option wird über den optischen Ausgang (S/PDIF) der Dolby Digital Ton ausgegeben
-menu.hint_audio_srs Schalten Sie SRS TruVolume ein oder aus
-menu.hint_audio_srs_algo Stellen Sie die Betriebsarten von SRS TruVolume ein
-menu.hint_audio_srs_nmgr Schalten Sie den NoiseManager ein oder aus
-menu.hint_audio_srs_volume Legen Sie die Referenzlautstärke für SRS TruVolume fest
 menu.hint_audio_volstart Legen Sie die Einschaltlautstärke fest, die immer beim Starten eingestellt werden soll
 menu.hint_audio_volstep Beim Betätigen der Lautstärketasten wird die Lautstärke immer schrittweise nach diesem Wert geändert
 menu.hint_audioplayer_defdir Wählen Sie das Startverzeichnis für den Audioplayer
@@ -2531,15 +2519,15 @@ timing.numericzap Umschalten mit Zifferntasten
 timing.popup_messages Popup Meldungen
 timing.static_messages Interaktive Meldungen
 timing.volumebar Lautstärkeanzeige
+tmdb.api_key TMDb API Schlüssel
+tmdb.enabled TMDb-Unterstützung
+tmdb.info TMDb-Info
+tmdb.read_data Suche TMDb-Daten ...
 tunersetup.cable Kabel (DVB-C)
 tunersetup.hybrid Hybrid (DVB-C/T/T2)
 tunersetup.mode Betriebsmodus
 tunersetup.power 5V-Versorgung bei DVB-T/T2 Kanälen
 tunersetup.terr Terrestrisch (DVB-T/T2)
-tmdb.api_key TMDb API Schlüssel
-tmdb.enabled TMDb-Unterstützung
-tmdb.info TMDb-Info
-tmdb.read_data Suche TMDb-Daten ...
 unicable.lnb Unicable Eingang
 unicable.pin Unicable PIN
 unicable.pin_hint PIN (1 - 255) für Benutzerfrequenz\n0 bedeutet inaktiv / aus

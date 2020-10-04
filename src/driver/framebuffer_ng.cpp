@@ -46,9 +46,6 @@
 #include <global.h>
 #include <video.h>
 #include <cs_api.h>
-#ifdef HAVE_COOL_HARDWARE
-#include <cnxtfb.h>
-#endif
 #if HAVE_SH4_HARDWARE
 #include <linux/stmfb.h>
 #include <png.h>
@@ -410,7 +407,7 @@ fprintf(stderr, "CFrameBuffer::setMode avail: %d active: %d\n", available, activ
 	paintBackground();
 	return ret;
 }
-#if 0 
+#if 0
 //never used
 void CFrameBuffer::setTransparency( int /*tr*/ )
 {
@@ -451,7 +448,7 @@ void CFrameBuffer::setBlendLevel(int level)
 	(void)level;
 }
 #else
-/* TRIPLEDRAGON */
+
 void CFrameBuffer::setBlendMode(uint8_t mode)
 {
 	Stb04GFXOsdControl g;

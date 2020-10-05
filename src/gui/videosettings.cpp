@@ -70,10 +70,6 @@
 #include "screensetup.h"
 #endif
 
-#ifdef BOXMODEL_CS_HD2
-#include <cnxtfb.h>
-#endif
-
 extern cVideo *videoDecoder;
 #ifdef ENABLE_PIP
 extern cVideo *pipDecoder;
@@ -304,14 +300,6 @@ const CMenuOptionChooser::keyval VIDEOMENU_VIDEOFORMAT_OPTIONS[VIDEOMENU_VIDEOFO
 	{ DISPLAY_AR_14_9, LOCALE_VIDEOMENU_VIDEOFORMAT_149        }
 };
 
-#define VIDEOMENU_DBDR_OPTION_COUNT 3
-const CMenuOptionChooser::keyval VIDEOMENU_DBDR_OPTIONS[VIDEOMENU_DBDR_OPTION_COUNT] =
-{
-	{ 0, LOCALE_VIDEOMENU_DBDR_NONE },
-	{ 1, LOCALE_VIDEOMENU_DBDR_DEBLOCK },
-	{ 2, LOCALE_VIDEOMENU_DBDR_BOTH }
-};
-
 #if HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
 #define VIDEOMENU_ZAPPINGMODE_OPTION_COUNT 4
 CMenuOptionChooser::keyval VIDEOMENU_ZAPPINGMODE_OPTIONS[VIDEOMENU_ZAPPINGMODE_OPTION_COUNT] =
@@ -393,20 +381,10 @@ int CVideoSettings::showVideoSetup()
 	CMenuOptionChooser * vs_videomodes_ch = new CMenuOptionChooser(LOCALE_VIDEOMENU_VIDEOMODE, &g_settings.video_Mode, vmode_options, vmode_option_count, true, this, CRCInput::RC_nokey, "", true);
 	vs_videomodes_ch->setHint("", LOCALE_MENU_HINT_VIDEO_MODE);
 
-	CMenuOptionChooser *vs_dbdropt_ch = NULL;
 	CMenuWidget videomodes(LOCALE_MAINSETTINGS_VIDEO, NEUTRINO_ICON_SETTINGS);
-#ifdef BOXMODEL_CS_HD2
-	CMenuForwarder * vs_automodes_fw = NULL;
-	CMenuWidget automodes(LOCALE_MAINSETTINGS_VIDEO, NEUTRINO_ICON_SETTINGS);
-#endif
+
 	CAutoModeNotifier anotify;
 	CMenuForwarder *vs_videomodes_fw = NULL;
-	//dbdr options
-	if (system_rev != 0x01)	/* dbdr options only on COOLSTREAM */
-	{
-		vs_dbdropt_ch = new CMenuOptionChooser(LOCALE_VIDEOMENU_DBDR, &g_settings.video_dbdr, VIDEOMENU_DBDR_OPTIONS, VIDEOMENU_DBDR_OPTION_COUNT, true, this);
-		vs_dbdropt_ch->setHint("", LOCALE_MENU_HINT_VIDEO_DBDR);
-	}
 
 	//video system modes submenue
 	if (g_info.hw_caps->has_HDMI) /* does this make sense on a box without HDMI? */
@@ -419,16 +397,6 @@ int CVideoSettings::showVideoSetup()
 
 		vs_videomodes_fw = new CMenuForwarder(LOCALE_VIDEOMENU_ENABLED_MODES, true, NULL, &videomodes, NULL, CRCInput::RC_mode);
 		vs_videomodes_fw->setHint("", LOCALE_MENU_HINT_VIDEO_MODES);
-
-#ifdef BOXMODEL_CS_HD2
-		automodes.addIntroItems(LOCALE_VIDEOMENU_ENABLED_MODES_AUTO);
-
-		for (int i = 0; i < VIDEOMENU_VIDEOMODE_OPTION_COUNT - 1; i++)
-			automodes.addItem(new CMenuOptionChooser(VIDEOMENU_VIDEOMODE_OPTIONS[i].valname, &g_settings.enabled_auto_modes[i], OPTIONS_OFF0_ON1_OPTIONS, OPTIONS_OFF0_ON1_OPTION_COUNT, true, &anotify));
-
-		vs_automodes_fw = new CMenuForwarder(LOCALE_VIDEOMENU_ENABLED_MODES_AUTO, true, NULL, &automodes, NULL, CRCInput::RC_green);
-		vs_automodes_fw->setHint("", LOCALE_MENU_HINT_VIDEO_MODES_AUTO);
-#endif
 	}
 
 	if (vs_colorformat_analog || vs_colorformat_hdmi) {
@@ -460,13 +428,8 @@ int CVideoSettings::showVideoSetup()
 	videosetup->addItem(vs_43mode_ch);	  //4:3 mode
 	videosetup->addItem(vs_dispformat_ch);	  //display format
 	videosetup->addItem(vs_videomodes_ch);	  //video system
-	if (vs_dbdropt_ch != NULL)
-		videosetup->addItem(vs_dbdropt_ch);	  //dbdr options
 	if (vs_videomodes_fw != NULL)
 		videosetup->addItem(vs_videomodes_fw);	  //video modes submenue
-#ifdef BOXMODEL_CS_HD2
-	videosetup->addItem(vs_automodes_fw);	  //video auto modes submenue
-#endif
 
 #if HAVE_SH4_HARDWARE
 	CColorSetupNotifier *colorSetupNotifier = new CColorSetupNotifier();
@@ -557,9 +520,7 @@ void CVideoSettings::setVideoSettings()
 	videoDecoder->SetVideoMode((analog_mode_t) g_settings.analog_mode1);
 	videoDecoder->SetVideoMode((analog_mode_t) g_settings.analog_mode2);
 #endif
-#ifdef BOXMODEL_CS_HD2
-	changeNotify(LOCALE_VIDEOMENU_ANALOG_MODE, NULL);
-#elif HAVE_SH4_HARDWARE
+#if HAVE_SH4_HARDWARE
 	changeNotify(LOCALE_VIDEOMENU_COLORFORMAT_ANALOG, NULL);
 	changeNotify(LOCALE_VIDEOMENU_COLORFORMAT_HDMI, NULL);
 #else
@@ -582,15 +543,8 @@ void CVideoSettings::setVideoSettings()
 	pipDecoder->setAspectRatio(g_settings.video_Format, g_settings.video_43mode);
 #endif
 
-	videoDecoder->SetDBDR(g_settings.video_dbdr);
 	CAutoModeNotifier anotify;
 	anotify.changeNotify(NONEXISTANT_LOCALE, 0);
-#ifdef BOXMODEL_CS_HD2
-	changeNotify(LOCALE_VIDEOMENU_BRIGHTNESS, NULL);
-	changeNotify(LOCALE_VIDEOMENU_CONTRAST, NULL);
-	changeNotify(LOCALE_VIDEOMENU_SATURATION, NULL);
-	changeNotify(LOCALE_VIDEOMENU_SDOSD, NULL);
-#endif
 #if HAVE_SH4_HARDWARE
 	frameBuffer->setMixerColor(g_settings.video_mixer_color);
 #endif
@@ -647,10 +601,6 @@ bool CVideoSettings::changeNotify(const neutrino_locale_t OptionName, void * /* 
 	{
 		videoDecoder->SetVideoMode((analog_mode_t) g_settings.analog_mode2);
 	}
-	else if (ARE_LOCALES_EQUAL(OptionName, LOCALE_VIDEOMENU_DBDR))
-	{
-		videoDecoder->SetDBDR(g_settings.video_dbdr);
-	}
 	else if (ARE_LOCALES_EQUAL(OptionName, LOCALE_VIDEOMENU_VCRSIGNAL))
 	{
 	}
@@ -672,28 +622,6 @@ bool CVideoSettings::changeNotify(const neutrino_locale_t OptionName, void * /* 
 		setupVideoSystem(true/*ask*/);
 		return true;
 	}
-#ifdef BOXMODEL_CS_HD2
-        else if (ARE_LOCALES_EQUAL(OptionName, LOCALE_VIDEOMENU_BRIGHTNESS))
-	{
-		videoDecoder->SetControl(VIDEO_CONTROL_BRIGHTNESS, g_settings.brightness);
-	}
-        else if (ARE_LOCALES_EQUAL(OptionName, LOCALE_VIDEOMENU_CONTRAST))
-	{
-		videoDecoder->SetControl(VIDEO_CONTROL_CONTRAST, g_settings.contrast*3);
-	}
-        else if (ARE_LOCALES_EQUAL(OptionName, LOCALE_VIDEOMENU_SATURATION))
-	{
-		videoDecoder->SetControl(VIDEO_CONTROL_SATURATION, g_settings.saturation*3);
-	}
-        else if (ARE_LOCALES_EQUAL(OptionName, LOCALE_VIDEOMENU_SDOSD))
-	{
-		int val = g_settings.enable_sd_osd;
-		printf("SD OSD enable: %d\n", val);
-		int fd = CFrameBuffer::getInstance()->getFileHandle();
-		if (ioctl(fd, FBIO_SCALE_SD_OSD, &val))
-			perror("FBIO_SCALE_SD_OSD");
-	}
-#endif
 #if 0
         else if (ARE_LOCALES_EQUAL(OptionName, LOCALE_VIDEOMENU_SHARPNESS))
 	{

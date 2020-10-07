@@ -103,7 +103,7 @@ CVideoSettings::~CVideoSettings()
 
 int CVideoSettings::exec(CMenuTarget* parent, const std::string &/*actionKey*/)
 {
-K	printf("[neutrino VideoSettings] %s: init video setup (Mode: %d)...\n",__FUNCTION__ , is_wizard);
+	printf("[neutrino VideoSettings] %s: init video setup (Mode: %d)...\n",__FUNCTION__ , is_wizard);
 	int   res = menu_return::RETURN_REPAINT;
 
 	if (parent)

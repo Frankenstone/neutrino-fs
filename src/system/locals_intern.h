@@ -1026,7 +1026,6 @@ const char * locale_real_names[] =
 	"lcdmenu.statusline.playtime",
 	"lcdmenu.statusline.volume",
 	"lcdmenu.vfd_scroll",
-	"ledcontroler.blink",
 	"ledcontroler.menu",
 	"ledcontroler.mode.deepstandby",
 	"ledcontroler.mode.record",

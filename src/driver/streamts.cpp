@@ -208,14 +208,12 @@ void CStreamInstance::run()
 
 	CCamManager::getInstance()->Start(channel_id, CCamManager::STREAM);
 
-#if HAVE_SH4_HARDWARE || HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
 	CFrontend *live_fe = CZapit::getInstance()->GetLiveFrontend();
 	if(live_fe)
 		CFEManager::getInstance()->unlockFrontend(live_fe);
 	if(frontend)
 		CFEManager::getInstance()->lockFrontend(frontend);
 	//CZapit::getInstance()->SetRecordMode(true);
-#endif
 	while (running) {
 		ssize_t r = dmx->Read(buf, IN_SIZE, 100);
 		if (r > 0)
@@ -224,11 +222,9 @@ void CStreamInstance::run()
 
 	CCamManager::getInstance()->Stop(channel_id, CCamManager::STREAM);
 
-#if HAVE_SH4_HARDWARE || HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
 	if(frontend)
 		CFEManager::getInstance()->unlockFrontend(frontend);
 	//CZapit::getInstance()->SetRecordMode(false);
-#endif
 
 	printf("CStreamInstance::run: exiting %" PRIx64 " (%d fds)\n", channel_id, (int)fds.size());
 
@@ -378,11 +374,9 @@ CFrontend * CStreamManager::FindFrontend(CZapitChannel * channel)
 	for (std::set<CFrontend*>::iterator ft = frontends.begin(); ft != frontends.end(); ++ft)
 		CFEManager::getInstance()->unlockFrontend(*ft);
 
-#if HAVE_SH4_HARDWARE || HAVE_ARM_HARDWARE || HAVE_MIPS_HARDWARE
 	if (unlock && !frontend)
-#else
-	if (unlock)
-#endif
+
+
 		CFEManager::getInstance()->unlockFrontend(live_fe);
 
 	CFEManager::getInstance()->Unlock();

@@ -936,32 +936,34 @@ void CZapit::SetAudioStreamType(CZapitAudioChannel::ZapitAudioChannelType audioC
 	switch (audioChannelType) {
 		case CZapitAudioChannel::AC3:
 			audioStr = "AC3";
-			audioDecoder->SetStreamType(AUDIO_FMT_DOLBY_DIGITAL);
 			break;
 		case CZapitAudioChannel::MPEG:
 			audioStr = "MPEG2";
-			audioDecoder->SetStreamType(AUDIO_FMT_MPEG);
 			break;
 		case CZapitAudioChannel::AAC:
 			audioStr = "AAC";
-			audioDecoder->SetStreamType(AUDIO_FMT_AAC);
 			break;
 		case CZapitAudioChannel::AACPLUS:
-			audioStr = "AAC-PLUS";
-			audioDecoder->SetStreamType(AUDIO_FMT_AAC_PLUS);
+			audioStr = "AAC-HE";
 			break;
 		case CZapitAudioChannel::DTS:
 			audioStr = "DTS";
-			audioDecoder->SetStreamType(AUDIO_FMT_DTS);
+			break;
+		case CZapitAudioChannel::DTSHD:
+			audioStr = "DTSHD";
 			break;
 		case CZapitAudioChannel::EAC3:
-			audioStr = "DD-PLUS";
-			audioDecoder->SetStreamType(AUDIO_FMT_DD_PLUS);
+			audioStr = "EAC3";
+			break;
+		case CZapitAudioChannel::LPCM:
+			audioStr = "LPCM";
 			break;
 		default:
 			printf("[zapit] unknown audio channel type 0x%x\n", audioChannelType);
 			break;
 	}
+
+	audioDecoder->SetStreamType(audioChannelType);
 
 	/* FIXME: bigger percent for AC3 only, what about AAC etc ? */
 	int newpercent = GetPidVolume(0, 0, audioChannelType == CZapitAudioChannel::AC3 || audioChannelType == CZapitAudioChannel::EAC3);
@@ -2054,13 +2056,21 @@ void CZapit::sendAPIDs(int connfd)
 		VALGRIND_PARANOIA(response);
 		response.pid = current_channel->getAudioPid(i);
 		strncpy(response.desc, current_channel->getAudioChannel(i)->description.c_str(), DESC_MAX_LEN-1);
-		response.is_ac3 = response.is_aac = response.is_eac3 = 0;
+		response.is_ac3 = response.is_aac = response.is_aache = response.is_eac3 = response.is_dts = response.is_dtshd = response.is_lpcm = 0;
 		if (current_channel->getAudioChannel(i)->audioChannelType == CZapitAudioChannel::AC3) {
 			response.is_ac3 = 1;
 		} else if (current_channel->getAudioChannel(i)->audioChannelType == CZapitAudioChannel::AAC) {
 			response.is_aac = 1;
+		} else if (current_channel->getAudioChannel(i)->audioChannelType == CZapitAudioChannel::AACPLUS) {
+			response.is_aache = 1;
 		} else if (current_channel->getAudioChannel(i)->audioChannelType == CZapitAudioChannel::EAC3) {
 			response.is_eac3 = 1;
+		} else if (current_channel->getAudioChannel(i)->audioChannelType == CZapitAudioChannel::DTS) {
+			response.is_dts = 1;
+		} else if (current_channel->getAudioChannel(i)->audioChannelType == CZapitAudioChannel::DTSHD) {
+			response.is_dtshd = 1;
+		} else if (current_channel->getAudioChannel(i)->audioChannelType == CZapitAudioChannel::LPCM) {
+			response.is_lpcm = 1;
 		}
 		response.component_tag = current_channel->getAudioChannel(i)->componentTag;
 

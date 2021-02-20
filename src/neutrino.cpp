@@ -635,7 +635,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	g_settings.epg_max_events       = configfile.getInt32("epg_max_events", 30000);
 	g_settings.epg_dir              = configfile.getString("epg_dir", "/media/sda1/epg");
 	// NTP-Server for sectionsd
-	g_settings.network_ntpserver    = configfile.getString("network_ntpserver", "time.fu-berlin.de");
+	g_settings.network_ntpserver    = configfile.getString("network_ntpserver", "0.pool.ntp.org");
 	g_settings.network_ntprefresh   = configfile.getString("network_ntprefresh", "30" );
 	g_settings.network_ntpenable    = configfile.getBool("network_ntpenable", false);
 
@@ -659,8 +659,6 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	//widget settings
 	g_settings.widget_fade = false;
 	g_settings.widget_fade           = configfile.getBool("widget_fade"          , false );
-
-	g_settings.osd_colorsettings_advanced_mode = configfile.getBool("osd_colorsettings_advanced_mode", false);
 
 #ifdef ENABLE_GRAPHLCD
 #if BOXMODEL_VUSOLO4K || BOXMODEL_VUDUO4K || BOXMODEL_VUDUO4KSE || BOXMODEL_VUULTIMO4K || BOXMODEL_VUUNO4KSE
@@ -1116,9 +1114,6 @@ int CNeutrinoApp::loadSetup(const char * fname)
 		}
 	}
 
-	if(configfile.getUnknownKeyQueryedFlag() && (erg==0)) {
-		erg = 2;
-	}
 
 #ifdef ENABLE_PIP
 	g_settings.pip_x = configfile.getInt32("pip_x", 50);
@@ -1139,8 +1134,15 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	g_settings.livestreamResolution = configfile.getInt32("livestreamResolution", 1920);
 	g_settings.livestreamScriptPath = configfile.getString("livestreamScriptPath", WEBTVDIR_VAR);
 
-	if(erg)
+	if (!erg)
+	{
+		if (configfile.getUnknownKeyQueryedFlag())
+			erg = 2;
+	}
+
+	if (erg)
 		configfile.setModifiedFlag(true);
+
 	return erg;
 }
 
@@ -1441,8 +1443,6 @@ void CNeutrinoApp::saveSetup(const char * fname)
 
 	//widget settings
 	configfile.setBool("widget_fade"          , g_settings.widget_fade          );
-
-	configfile.setBool("osd_colorsettings_advanced_mode", g_settings.osd_colorsettings_advanced_mode);
 
 #ifdef ENABLE_GRAPHLCD
 	configfile.setInt32("glcd_enable", g_settings.glcd_enable);

@@ -675,9 +675,9 @@ CFrontend * CFEManager::getFrontend(CZapitChannel * channel)
 }
 
 #ifdef DYNAMIC_DEMUX
-int CFEManager::getDemux(transponder_id_t id)
+int CFEManager::getDemux(transponder_id_t id, int feNum)
 {
-	for (unsigned int i = 1; i < dmap.size(); i++) {
+	for (unsigned int i = feNum +1; i < dmap.size(); i++) {
 		if((dmap[i].usecount == 0) || dmap[i].tpid == id)
 			return i;
 	}
